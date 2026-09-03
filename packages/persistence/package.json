@@ -1,0 +1,29 @@
+{
+  "name": "@storyframe/persistence",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./postgres": {
+      "types": "./dist/postgres.d.ts",
+      "import": "./dist/postgres.js"
+    },
+    "./migrations": {
+      "types": "./dist/migrations.d.ts",
+      "import": "./dist/migrations.js"
+    },
+    "./migration-files": {
+      "types": "./dist/migration-files.d.ts",
+      "import": "./dist/migration-files.js"
+    }
+  },
+  "dependencies": {
+    "@storyframe/world-schema": "*"
+  }
+}

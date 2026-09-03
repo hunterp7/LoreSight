@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StoryFrame — Admin First-Play Audit</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, system-ui, sans-serif;
+        background: #120d08;
+        color: #ffd9a0;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-width: 2990px; background: #120d08; }
+      main { padding: 96px 96px 120px; }
+      header { width: 960px; margin-bottom: 72px; }
+      .eyebrow { margin: 0 0 16px; color: #ff9a32; font: 700 15px/1.3 "Courier New", monospace; letter-spacing: .12em; text-transform: uppercase; }
+      h1 { margin: 0 0 20px; color: #fff1d6; font: 700 48px/1.08 Georgia, serif; }
+      .lede { margin: 0; color: #d9b98d; font-size: 20px; line-height: 1.55; }
+      .flow { display: flex; align-items: flex-start; gap: 200px; }
+      article { width: 320px; flex: 0 0 320px; }
+      .step { margin: 0 0 10px; color: #ff9a32; font: 700 14px/1.4 "Courier New", monospace; letter-spacing: .08em; text-transform: uppercase; }
+      h2 { min-height: 58px; margin: 0 0 20px; color: #fff1d6; font: 700 23px/1.2 Georgia, serif; }
+      .shot { width: 245px; min-height: 915px; margin-bottom: 28px; border: 1px solid #704521; background: #1f160e; box-shadow: 0 0 28px rgba(255, 132, 24, .14); }
+      .shot img { display: block; width: 245px; height: auto; }
+      .health { display: inline-block; margin-bottom: 18px; padding: 7px 10px; border: 1px solid #825128; color: #ffc174; font: 700 12px/1 "Courier New", monospace; text-transform: uppercase; }
+      h3 { margin: 0 0 10px; color: #fff1d6; font-size: 17px; line-height: 1.3; }
+      ul { margin: 0; padding-left: 20px; color: #d9b98d; font-size: 15px; line-height: 1.52; }
+      li + li { margin-top: 8px; }
+      .after { color: #a9e1a3; border-color: #4e7d49; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">StoryFrame product audit · August 2, 2026</p>
+        <h1>Admin first-play journey</h1>
+        <p class="lede">Can a first-time tester choose a story, understand its opening, make one choice, and understand what changed? The revised flow now answers yes.</p>
+      </header>
+      <section class="flow" aria-label="Audit states in journey order">
+        <article>
+          <p class="step">01 · Before</p><h2>Choose a story</h2>
+          <div class="shot"><img src="01-home.png" alt="Original StoryFrame story chooser" /></div>
+          <span class="health">Needs improvement</span>
+          <h3>What slowed comprehension</h3>
+          <ul><li>Cards led with test health instead of story premise.</li><li>Five destinations overflowed the narrow navigation.</li><li>Version and check counts competed with story titles.</li></ul>
+        </article>
+        <article>
+          <p class="step">02 · Before</p><h2>Understand the opening</h2>
+          <div class="shot"><img src="02-first-play.png" alt="Original playtest without scene text" /></div>
+          <span class="health">Poor</span>
+          <h3>What slowed comprehension</h3>
+          <ul><li>The playtest began with choices but no scene or premise.</li><li>Diagnostics and correction tools arrived before story context.</li><li>Repeated sessions had indistinguishable labels.</li></ul>
+        </article>
+        <article>
+          <p class="step">03 · Before</p><h2>Understand a choice</h2>
+          <div class="shot"><img src="03-after-choice.png" alt="Original choice result using an internal intent identifier" /></div>
+          <span class="health">Poor</span>
+          <h3>What slowed comprehension</h3>
+          <ul><li>History exposed an internal intent ID.</li><li>No readable confirmation explained the action.</li><li>The revealed clue lived on a different page.</li></ul>
+        </article>
+        <article>
+          <p class="step">04 · Revised</p><h2>Choose a story</h2>
+          <div class="shot"><img src="04-revised-home.png" alt="Revised story chooser with opening previews" /></div>
+          <span class="health after">Good</span>
+          <h3>Why the revision works</h3>
+          <ul><li>Cards preview authored opening scenes.</li><li>Technical checks move into a disclosure.</li><li>All five destinations remain visible on narrow screens.</li></ul>
+        </article>
+        <article>
+          <p class="step">05 · Revised</p><h2>Understand the opening</h2>
+          <div class="shot"><img src="05-revised-first-play.png" alt="Revised playtest led by scene title and prose" /></div>
+          <span class="health after">Good</span>
+          <h3>Why the revision works</h3>
+          <ul><li>Scene title and authored prose are the visual focus.</li><li>The prompt uses plain, familiar language.</li><li>Alternate-path tools wait until a choice exists.</li></ul>
+        </article>
+        <article>
+          <p class="step">06 · Revised</p><h2>Understand a choice</h2>
+          <div class="shot"><img src="06-revised-after-choice.png" alt="Revised choice result with an in-context clue" /></div>
+          <span class="health after">Good</span>
+          <h3>Why the revision works</h3>
+          <ul><li>The clue appears immediately beside the story.</li><li>History uses authored choice titles and descriptions.</li><li>Try a different path appears only when useful.</li></ul>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

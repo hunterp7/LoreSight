@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+  },
+  "references": [
+    { "path": "../world-schema" },
+    { "path": "../engine-core" },
+    { "path": "../projections" },
+    { "path": "../persistence" }
+  ],
+  "include": ["src/**/*.ts"]
+}

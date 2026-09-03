@@ -1,0 +1,37 @@
+# Trading compiler conformance world
+WORLD conformance.compiled-trading v1.0.0
+  title: Compiled Lantern Market
+  owner: Storyframe conformance suite
+  rights: original
+  engine: 0.1.0
+
+FRAME market
+  title: Lantern Market
+  text: Lanterns sway above a crowded night market. You have ten credits and one chance to trade before the stalls close.
+
+ENDING departed
+  title: Market Closed
+  text: The lanterns dim behind you as the market closes for the night.
+
+STATE
+  frame: market
+  location: lantern-market
+  resource credits = 10 range 0..100 audiences player, model, creator, debug
+  inventory spice = 0 audiences player, model, creator, debug
+
+INTENT buy_spice
+  title: Buy spice
+  description: Spend four credits to buy one unit of spice.
+  frames: market
+  when: resource credits >= 4
+  effects:
+    - adjust resource credits by -4
+    - add inventory spice 1
+
+INTENT leave_market
+  title: Leave the market
+  description: Finish trading and depart.
+  frames: market
+  effects:
+    - go departed
+    - complete

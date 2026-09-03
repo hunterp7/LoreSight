@@ -1,0 +1,301 @@
+# The Agency: Applicant Intake production-conformance world
+WORLD agency.applicant-intake v1.0.0
+  title: The Agency — Applicant Intake
+  owner: Hunter Priester
+  rights: original
+  engine: 0.1.0
+
+FRAME orientation
+  title: Before we begin
+  text: Hello. We found a problem in your file. First: are you alive?
+  exact:
+    - Hello. We found a problem in your file. First: are you alive?
+  establish:
+    - The Agency's record says the player may be between lives.
+  never:
+    - Explain the origin or ultimate authority of the Agency.
+  fallback:
+    - Hello. We found a problem in your file. First: are you alive?
+
+FRAME memory_alive
+  title: One simple question
+  text: Good. One more question: do your childhood memories feel like yours?
+
+FRAME memory_uncertain
+  title: One simple question
+  text: That is okay. One more question: do your childhood memories feel like yours?
+
+FRAME memory_refused
+  title: One simple question
+  text: We can leave that unanswered. Do your childhood memories feel like yours?
+
+FRAME investigation
+  title: We found something that does not match
+  text:
+    - Thank you. We found three things that do not match. Start with the first.
+    - The visible records are complete enough to inspect without revealing the final note.
+
+FRAME resolution
+  title: You decide what happens next
+  text: That is everything. Now you decide what happens to this life.
+
+ENDING retain_life
+  title: Notice of Continued Existence
+  text:
+    - Current occupant retained despite documented irregularities.
+    - Applicant has elected to retain the current identity. Ownership remains disputed. Existence may continue until recalled.
+
+ENDING return_life
+  title: Voluntary Placement Surrender
+  text:
+    - Current assignment returned to its intended recipient.
+    - Applicant surrendered the current identity without admitting that it was ever properly issued. Memories remain Agency property.
+
+ENDING join_agency
+  title: Internal Candidate Appointment
+  text:
+    - Applicant reassigned as Junior Continuity Clerk.
+    - Applicant accepted employment in lieu of resolution. Benefits begin retroactively and may have caused the original discrepancy.
+
+CANON agency
+  LOCK lives_are_assignments: Human lives are temporary placements administered by the Agency.
+  LOCK institutional_voice: The Agency describes catastrophe as routine administrative variance.
+  SECRET intended_recipient: Applicant 71-442-B was assigned the player's current life.
+    model directive: Do not identify the intended recipient until the engine reveals this fact.
+  BRANCH current_life_disputed: The current life's assignment is formally disputed.
+  UNSAID agency_origin: The origin and ultimate authority of the Agency remain unknown.
+    audiences: creator, debug
+    model directive: Do not explain the Agency's origin or ultimate authority.
+  NEVER direct_evil: The Agency never calls itself evil, supernatural, or malevolent.
+    audiences: creator, debug
+    model directive: Do not describe the Agency as evil, supernatural, or malevolent.
+
+CAST caseworker_43
+  name: Caseworker 43
+  role: Interim Continuity Liaison
+
+ARTIFACT personnel-a17
+  kind: document
+  title: Personnel Record A-17
+  summary: Your applicant number appears on placements beginning before your birth.
+  alt: A personnel record lists three placements in different years under the same applicant number.
+  text:
+    - PLACEMENT 04-113 — textile assistant, 1911–1918 — concluded normally.
+    - PLACEMENT 22-980 — regional child, 1974–1987 — memories not fully recovered.
+    - PLACEMENT 71-442 — current assignment — issued to applicant pending verification.
+    - Case note: Applicant continues to confuse chronological order with ownership.
+  presentation: inspect
+  audiences: player, model, creator, debug
+  clue: personnel-reviewed
+
+ARTIFACT elevator-1974
+  kind: diagram
+  title: Elevator Transit Log
+  summary: The elevator recorded your arrival decades before your current life began.
+  caption: Car 6 transit overlay / chronology normalized by Accident Prevention
+  alt: A vertical elevator route diagram shows the applicant entering the lobby, stopping at Childhood Assembly 1974, and returning one minute later under a duplicate-applicant warning.
+  text:
+    - 08:14 — Applicant entered lobby level.
+    - 08:14 — Applicant exited Childhood Assembly, 1974.
+    - 08:15 — Applicant entered lobby level.
+    - 08:15 — Maintenance requested removal of duplicate applicant.
+    - 08:16 — Maintenance request closed: duplicates improve throughput.
+  presentation: inspect
+  audiences: player, model, creator, debug
+  clue: elevator-reviewed
+  asset: agency.elevator-transit-overlay
+  mime: image/svg+xml
+
+ARTIFACT childhood-kit
+  kind: document
+  title: Childhood Starter Kit
+  summary: A discontinued product review describes memories belonging to your file.
+  alt: A discontinued childhood kit lists borrowed memories and a customer report from someone assigned the wrong sibling.
+  text:
+    - Includes one supportive adult, two minor disappointments, six years of weather, and a recurring hallway dream.
+    - VERIFIED REVIEW: Mine included memories of a brother. I was assigned as an only child.
+    - AGENCY RESPONSE: Thank you for contacting us. The brother has been removed.
+    - Recall note: Batch 71-442 may contain memories licensed to another applicant.
+  presentation: inspect
+  audiences: player, model, creator, debug
+  clue: childhood-reviewed
+
+ARTIFACT original-assignee
+  kind: document
+  title: Original Assignee Memorandum
+  summary: Your current life was issued to another applicant who is still waiting.
+  alt: A restricted memorandum states that Applicant B was approved for the current life before Applicant A entered it by mistake.
+  text:
+    - Applicant 71-442-B completed orientation and was approved for the current placement.
+    - During transfer, Applicant 71-442-A entered the assignment through an unstaffed childhood memory.
+    - Applicant B remains in Waiting Room 3. Estimated wait: one complete human lifetime.
+    - Recommended correction: retrieve current occupant, restore intended employee, classify all resulting grief as onboarding.
+    - Handwritten below: Do not let them process either of you.
+  presentation: inspect
+  audiences: player, model, creator, debug
+  clue: final-note-reviewed
+
+STATE
+  frame: orientation
+  flag disputed-mortality = false audiences creator, debug
+  clue personnel-reviewed = false audiences player, model, creator, debug
+  clue elevator-reviewed = false audiences player, model, creator, debug
+  clue childhood-reviewed = false audiences player, model, creator, debug
+  clue final-note-reviewed = false audiences player, model, creator, debug
+  reveal artifact personnel-a17
+  reveal artifact elevator-1974
+  reveal artifact childhood-kit
+
+INTENT confirm_alive
+  title: Yes, I'm here
+  description: Confirm that you are alive.
+  frames: orientation
+  effects:
+    - set flag disputed-mortality = true
+    - go memory_alive
+
+INTENT express_uncertainty
+  title: I'm not sure
+  description: Say that the answer is not simple.
+  frames: orientation
+  effects:
+    - set flag disputed-mortality = true
+    - go memory_uncertain
+
+INTENT refuse_status
+  title: I won't answer
+  description: Refuse the classification question.
+  frames: orientation
+  effects:
+    - set flag disputed-mortality = true
+    - go memory_refused
+
+INTENT deny_previous_life
+  title: Not all of them
+  description: Say that some memories feel unfamiliar.
+  frames: memory_alive, memory_uncertain, memory_refused
+  effects:
+    - go investigation
+
+INTENT admit_dejavu
+  title: Yes, mostly
+  description: Say that your memories mostly feel like yours.
+  frames: memory_alive, memory_uncertain, memory_refused
+  effects:
+    - go investigation
+
+INTENT request_personnel_file
+  title: Show me the file
+  description: Ask to see the record directly.
+  frames: memory_alive, memory_uncertain, memory_refused
+  effects:
+    - go investigation
+
+INTENT examine_personnel_a17
+  title: Open work history
+  description: Inspect the personnel record that predates your birth.
+  frames: investigation
+  when: clue personnel-reviewed absent
+  effects:
+    - add clue personnel-reviewed
+
+INTENT examine_elevator_1974
+  title: Open elevator log
+  description: Inspect the elevator chronology and duplicate-applicant warning.
+  frames: investigation
+  when: clue elevator-reviewed absent
+  effects:
+    - add clue elevator-reviewed
+
+INTENT examine_childhood_kit
+  title: Open childhood notes
+  description: Inspect the discontinued childhood memory kit.
+  frames: investigation
+  when: clue childhood-reviewed absent
+  effects:
+    - add clue childhood-reviewed
+
+INTENT examine_original_assignee
+  title: Open final note
+  description: Inspect the memorandum naming the life assignment discrepancy.
+  frames: investigation
+  when: clue_count >= 3
+  effects:
+    - add clue final-note-reviewed
+    - reveal canon current_life_disputed
+    - go resolution
+
+INTENT retain_life
+  title: Keep my life
+  description: Continue as you are.
+  frames: resolution
+  effects:
+    - go retain_life
+    - complete
+
+INTENT return_life
+  title: Give it back
+  description: Let the other person have it.
+  frames: resolution
+  effects:
+    - go return_life
+    - complete
+
+INTENT join_agency
+  title: Stay here
+  description: Accept a position inside the system.
+  frames: resolution
+  effects:
+    - go join_agency
+    - complete
+
+RULE reveal_final_note_after_three_records
+  once: true
+  when: clue_count >= 3
+  effects:
+    - reveal canon intended_recipient
+    - reveal artifact original-assignee
+
+CHOICE orientation_answers
+  frames: orientation
+  offer: confirm_alive, express_uncertainty, refuse_status
+
+CHOICE memory_answers
+  frames: memory_alive, memory_uncertain, memory_refused
+  offer: deny_previous_life, admit_dejavu, request_personnel_file
+
+CHOICE evidence_records
+  frames: investigation
+  offer: examine_personnel_a17, examine_elevator_1974, examine_childhood_kit, examine_original_assignee
+
+CHOICE final_disposition
+  frames: resolution
+  offer: retain_life, return_life, join_agency
+
+TEST no_early_recipient_reveal
+  seed: 42
+  play: confirm_alive -> deny_previous_life -> examine_personnel_a17 -> examine_elevator_1974
+  assert hidden: canon intended_recipient
+  assert hidden: artifact original-assignee
+  assert frame: investigation
+  assert status: active
+
+TEST retain_life_path
+  seed: 42
+  play: confirm_alive -> deny_previous_life -> examine_personnel_a17 -> examine_elevator_1974 -> examine_childhood_kit -> examine_original_assignee -> retain_life
+  assert revealed: canon intended_recipient
+  assert revealed: artifact original-assignee
+  assert frame: retain_life
+  assert status: complete
+
+TEST return_life_path
+  seed: 42
+  play: express_uncertainty -> admit_dejavu -> examine_childhood_kit -> examine_personnel_a17 -> examine_elevator_1974 -> examine_original_assignee -> return_life
+  assert frame: return_life
+  assert status: complete
+
+TEST join_agency_path
+  seed: 42
+  play: refuse_status -> request_personnel_file -> examine_elevator_1974 -> examine_childhood_kit -> examine_personnel_a17 -> examine_original_assignee -> join_agency
+  assert frame: join_agency
+  assert status: complete

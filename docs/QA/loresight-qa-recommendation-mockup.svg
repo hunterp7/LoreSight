@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">LoreSight QA recommendation mockup</title>
+  <desc id="desc">Three-panel wireframe showing corrected action deck, synchronized settings controls, and a remix source upload step.</desc>
+  <rect width="1200" height="820" fill="#111511"/>
+  <style>
+    .label{font:700 16px ui-monospace,monospace;letter-spacing:1px;fill:#f4d889}.small{font:13px ui-monospace,monospace;fill:#b8c0b2}.body{font:16px ui-monospace,monospace;fill:#d9dfd2}.panel{fill:#e4dfca;stroke:#6c705e;stroke-width:2}.screen{fill:#090d0b;stroke:#8e9b84;stroke-width:2}.ink{fill:#182016}.line{stroke:#56614f;stroke-width:2}.accent{stroke:#f4d889;stroke-width:3}.green{stroke:#6ea86b;stroke-width:3}.blue{stroke:#7ba0d8;stroke-width:3}
+  </style>
+  <text x="42" y="42" class="label">LORESIGHT // QA RECOMMENDATIONS</text>
+  <text x="42" y="70" class="small">Fix the interaction contract before adding more presentation layers.</text>
+
+  <rect x="34" y="104" width="1132" height="224" rx="14" class="panel"/>
+  <text x="56" y="136" class="label ink">01  UNIFIED ACTION DECK</text>
+  <text x="56" y="160" class="small ink">Use the same labels in the physical bezel treatment and native ChatGPT rail.</text>
+  <g transform="translate(56 188)">
+    <rect width="246" height="104" rx="8" fill="#edbd65" stroke="#5e441a" stroke-width="2"/>
+    <text x="18" y="45" class="body ink" font-weight="700">Imagine a new story</text>
+    <rect x="260" width="246" height="104" rx="8" fill="#b9d08c" stroke="#3f5b33" stroke-width="2"/>
+    <text x="278" y="45" class="body ink" font-weight="700">Remix a story</text>
+    <rect x="520" width="300" height="104" rx="8" fill="#aebbd0" stroke="#314b6d" stroke-width="2"/>
+    <text x="538" y="38" class="body ink" font-weight="700">Play Z-machine files</text>
+    <text x="538" y="66" class="small ink">.z3 · .z5 · .z8 · .zblorb</text>
+    <rect x="834" width="246" height="104" rx="8" fill="#ded9ca" stroke="#5e5a4f" stroke-width="2"/>
+    <text x="852" y="45" class="body ink" font-weight="700">Browse Library</text>
+  </g>
+
+  <rect x="34" y="356" width="548" height="420" rx="14" class="panel"/>
+  <text x="56" y="390" class="label ink">02  SETTINGS FEEDBACK</text>
+  <text x="56" y="415" class="small ink">The displayed value must be the live value, not the saved snapshot.</text>
+  <rect x="56" y="442" width="504" height="292" rx="8" class="screen"/>
+  <text x="78" y="476" class="label">GREEN // DISPLAY SETTINGS</text>
+  <text x="78" y="520" class="small">Brightness</text>
+  <line x1="190" y1="514" x2="500" y2="514" class="line"/>
+  <line x1="190" y1="514" x2="410" y2="514" class="green"/>
+  <circle cx="410" cy="514" r="9" fill="#6ea86b"/>
+  <text x="514" y="520" class="body">0.70</text>
+  <text x="78" y="574" class="small">Glyph scale</text>
+  <line x1="190" y1="568" x2="500" y2="568" class="line"/>
+  <line x1="190" y1="568" x2="352" y2="568" class="green"/>
+  <circle cx="352" cy="568" r="9" fill="#6ea86b"/>
+  <text x="514" y="574" class="body">0.33</text>
+  <rect x="78" y="626" width="200" height="42" rx="6" fill="#f4d889"/>
+  <text x="98" y="653" class="body ink" font-weight="700">Save appearance</text>
+  <text x="302" y="653" class="small">Saved locally · Green</text>
+
+  <rect x="608" y="356" width="558" height="420" rx="14" class="panel"/>
+  <text x="630" y="390" class="label ink">03  REMIX SOURCE STEP</text>
+  <text x="630" y="415" class="small ink">Make catalog and local-file sources equally actionable.</text>
+  <rect x="630" y="450" width="514" height="78" rx="8" fill="#f7f4e8" stroke="#6c705e" stroke-width="2"/>
+  <text x="652" y="480" class="small ink">Source</text>
+  <text x="652" y="508" class="body ink">Choose from library  ▾</text>
+  <rect x="630" y="548" width="514" height="112" rx="8" fill="#090d0b" stroke="#6ea86b" stroke-width="2"/>
+  <text x="654" y="582" class="label">OR DROP A Z-MACHINE FILE</text>
+  <text x="654" y="610" class="small">.z3 · .z5 · .z8 · .zblorb</text>
+  <rect x="654" y="626" width="136" height="24" rx="4" fill="#6ea86b"/>
+  <text x="674" y="643" class="small" fill="#091009">Choose file</text>
+  <text x="630" y="704" class="small ink">Selected source: none</text>
+</svg>

@@ -1,0 +1,71 @@
+{
+  "name": "storyframe",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "type": "module",
+  "description": "A deterministic narrative engine, creator platform, and ChatGPT plugin.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build:packages && npm run build:web && npm run build:admin && npm run build:launch && tsc -p server/tsconfig.json",
+    "build:packages": "tsc -b packages/world-schema packages/engine-core packages/projections packages/storyframe packages/ai-director packages/persistence packages/application packages/auth packages/story-debugger packages/test-fixtures",
+    "build:web": "node scripts/build-widget.mjs",
+    "build:admin": "node scripts/build-admin.mjs",
+    "build:launch": "node scripts/build-launch-pad.mjs",
+    "check": "npm run check:packages && tsc -p server/tsconfig.json --noEmit && tsc -p web/tsconfig.json --noEmit && tsc -p admin/tsconfig.json --noEmit && tsc -p launch/tsconfig.json --noEmit",
+    "check:packages": "tsc -p packages/world-schema/tsconfig.json --noEmit && tsc -p packages/engine-core/tsconfig.json --noEmit && tsc -p packages/projections/tsconfig.json --noEmit && tsc -p packages/storyframe/tsconfig.json --noEmit && tsc -p packages/ai-director/tsconfig.json --noEmit && tsc -p packages/persistence/tsconfig.json --noEmit && tsc -p packages/application/tsconfig.json --noEmit && tsc -p packages/auth/tsconfig.json --noEmit && tsc -p packages/story-debugger/tsconfig.json --noEmit && tsc -p packages/test-fixtures/tsconfig.json --noEmit",
+    "dev": "npm run build && node server/dist/index.js",
+    "debug:example": "npm run build:packages && node scripts/debug-storyline.mjs",
+    "eval:director:live": "npm run build:packages && tsc -p server/tsconfig.json && node scripts/eval-director-live.mjs",
+    "storyframe:compile": "npm run build:packages && node scripts/compile-storyframe.mjs",
+    "smoke": "node scripts/smoke-mcp.mjs",
+    "smoke:admin": "node scripts/smoke-admin.mjs",
+    "check:submission": "npm run build:packages && tsc -p server/tsconfig.json && node scripts/validate-submission.mjs",
+    "check:submission:live": "node scripts/validate-submission.mjs --live",
+    "check:launch": "npm run build:web && node scripts/check-launch-surface.mjs",
+    "start": "node server/dist/index.js",
+    "chatgpt:proxy": "node scripts/chatgpt-safe-proxy.mjs",
+    "chatgpt:url": "node scripts/generate-mcp-url.mjs",
+    "chatgpt:tunnel": "node scripts/start-chatgpt-tunnel.mjs",
+    "test": "npm run build:packages && node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^1.7.5",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@openai/apps-sdk-ui": "^0.2.2",
+    "@xterm/xterm": "^6.0.0",
+    "cool-retro-term-renderer": "^1.0.1",
+    "gsap": "^3.15.0",
+    "ifvms": "^1.1.6",
+    "jose": "^6.2.6",
+    "pixelarticons": "^2.2.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "retro-react": "^1.6.0",
+    "three": "^0.185.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@storyframe/ai-director": "*",
+    "@storyframe/application": "*",
+    "@storyframe/auth": "*",
+    "@storyframe/engine-core": "*",
+    "@storyframe/persistence": "*",
+    "@storyframe/projections": "*",
+    "@storyframe/story-debugger": "*",
+    "@storyframe/storyframe": "*",
+    "@storyframe/test-fixtures": "*",
+    "@storyframe/world-schema": "*",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.185.3",
+    "esbuild": "^0.25.0",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 96" role="img" aria-labelledby="title desc">
+  <title id="title">LoreSight</title>
+  <desc id="desc">LoreSight starburst mark and wordmark on a transparent background.</desc>
+  <g fill="none" stroke="#ead8b8" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <path d="M42 8v20M42 68v20M8 48h20M56 48h20"/>
+    <path d="m18 24 14 14M52 58l14 14M66 24 52 38M32 58 18 72"/>
+    <path d="M42 28 48 42l14 6-14 6-6 14-6-14-14-6 14-6z"/>
+  </g>
+  <text x="96" y="65" fill="#ead8b8" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="4">LORESIGHT</text>
+</svg>

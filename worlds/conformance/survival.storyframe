@@ -1,0 +1,45 @@
+# Survival compiler conformance world
+WORLD conformance.compiled-survival v1.0.0
+  title: Compiled Dust Road
+  owner: Storyframe conformance suite
+  rights: original
+  engine: 0.1.0
+
+FRAME road
+  title: Dust Road
+  text: A dust road runs toward the outpost. Your supplies are limited, and the abandoned roadside may hide something useful.
+
+ENDING arrived
+  title: The Outpost
+  text: The outpost rises through the dust. You made it across the road.
+
+STATE
+  frame: road
+  location: mile-zero
+  resource supplies = 3 range 0..5 audiences player, model, creator, debug
+  resource health = 5 range 0..5 audiences player, model, creator, debug
+  clock day = 0 range 0..10 audiences player, model, creator, debug
+  inventory salvage = 0 audiences player, model, creator, debug
+
+INTENT travel_to_outpost
+  title: Travel to the outpost
+  description: Spend one supply and one day to reach the outpost.
+  frames: road
+  when: resource supplies >= 1
+  effects:
+    - adjust resource supplies by -1
+    - advance clock day by 1
+    - set location outpost
+    - go arrived
+    - complete
+
+INTENT search_for_supplies
+  title: Search for supplies
+  description: Make a seeded search for one additional supply.
+  frames: road
+  effects:
+    - check roadside_cache chance 5000
+      success:
+        - adjust resource supplies by 1
+      failure:
+        - adjust resource health by -1

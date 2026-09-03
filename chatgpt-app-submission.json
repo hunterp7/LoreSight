@@ -1,0 +1,176 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "LoreSight",
+    "subtitle": "Play interactive fiction",
+    "description": "LoreSight lets people open a CRT-based interactive-fiction player, browse a story library, load supported Z-machine files, play a bundled sample, submit commands, change the display theme, and request optional narration of visible story text.",
+    "category": "ENTERTAINMENT"
+  },
+  "tools": {
+    "start_story_session": {
+      "annotations": { "readOnlyHint": false, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Creates a new private LoreSight session and returns its initial player-safe state.",
+        "open_world_justification": "Changes only a private LoreSight session and does not publish or contact external systems.",
+        "destructive_justification": "Starts a session without deleting, overwriting, or revoking existing data."
+      }
+    },
+    "list_story_library": {
+      "annotations": { "readOnlyHint": true, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Retrieves the available LoreSight story titles, authors, formats, and sources without changing state.",
+        "open_world_justification": "Reads a closed LoreSight catalog and does not write to public or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "open_story_library": {
+      "annotations": { "readOnlyHint": true, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Requests that the mounted widget show the story library without changing story or catalog data.",
+        "open_world_justification": "Only changes the private widget presentation and does not affect external systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "load_story_file": {
+      "annotations": { "readOnlyHint": false, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Starts a user-directed local file-selection workflow for a supported Z-machine file; the server does not read the filesystem.",
+        "open_world_justification": "Loads only a file the user explicitly selects into the private widget and does not upload or publish it.",
+        "destructive_justification": "Does not delete or modify the selected local file."
+      }
+    },
+    "play_sample_story": {
+      "annotations": { "readOnlyHint": false, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Starts the bundled sample story in a private LoreSight player session.",
+        "open_world_justification": "Changes only the local player experience and does not affect public or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, or revoke any user data."
+      }
+    },
+    "set_theme": {
+      "annotations": { "readOnlyHint": false, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Applies the selected CRT theme to the user's private widget and saves the presentation preference locally.",
+        "open_world_justification": "Changes only private LoreSight presentation state and does not write to external systems.",
+        "destructive_justification": "Does not alter story content or delete existing preferences."
+      }
+    },
+    "submit_feedback": {
+      "annotations": { "readOnlyHint": false, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Sends only the feedback the user explicitly submits, along with bounded diagnostic metadata when selected.",
+        "open_world_justification": "Records feedback for LoreSight support and does not publish content or contact third parties on the user's behalf.",
+        "destructive_justification": "Creates a feedback record without deleting, overwriting, or revoking user data."
+      }
+    },
+    "get_story_recap": {
+      "annotations": { "readOnlyHint": true, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Retrieves the current player-safe story recap without advancing or changing the session.",
+        "open_world_justification": "Reads only private LoreSight session state and does not affect external systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "get_story_state": {
+      "annotations": { "readOnlyHint": true, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Retrieves the current player-safe scene, progress, released clues, and available choices without changing the session.",
+        "open_world_justification": "Reads only private LoreSight session state and does not affect external systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "submit_story_command": {
+      "annotations": { "readOnlyHint": false, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Commits one validated command to the private LoreSight session and advances its authoritative state version.",
+        "open_world_justification": "Changes only a closed LoreSight session and does not post, send, or publish externally.",
+        "destructive_justification": "Appends a retry-safe event and rejects stale or duplicate mutations rather than deleting or rewriting history."
+      }
+    },
+    "open_story_interface": {
+      "annotations": { "readOnlyHint": true, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Retrieves the current safe session snapshot and renders the interactive interface without changing story state.",
+        "open_world_justification": "Renders private LoreSight information and does not modify public or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "generate_story_narration": {
+      "annotations": { "readOnlyHint": true, "openWorldHint": false, "destructiveHint": false },
+      "justifications": {
+        "read_only_justification": "Generates temporary audio from already visible story text without changing canonical story state.",
+        "open_world_justification": "Returns narration privately to the current widget and does not publish it or contact user-selected third parties.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Open LoreSight and browse available stories.",
+      "user_prompt": "Open LoreSight, show me the library, and tell me which formats are available.",
+      "file_attachment_urls": null,
+      "tools_triggered": "start_story_session",
+      "expected_output": "Starts the player and presents the library action or library results without changing a story session.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Retrieve and inspect the story catalog.",
+      "user_prompt": "List the stories available in LoreSight.",
+      "file_attachment_urls": null,
+      "tools_triggered": "list_story_library",
+      "expected_output": "Returns story titles, authors, supported formats, and source labels.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Load a user-selected Z-machine file.",
+      "user_prompt": "Open the file picker so I can play my .z5 game.",
+      "file_attachment_urls": null,
+      "tools_triggered": "load_story_file",
+      "expected_output": "Opens the LoreSight local file-selection flow and accepts only supported Z-machine formats.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Advance an active story with a guarded command.",
+      "user_prompt": "In my active LoreSight story, examine the door.",
+      "file_attachment_urls": null,
+      "tools_triggered": "submit_story_command",
+      "expected_output": "Commits the command at the current state version and returns the next player-safe story state.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Request optional narration of visible story text.",
+      "user_prompt": "Read the current visible LoreSight scene aloud.",
+      "file_attachment_urls": null,
+      "tools_triggered": "generate_story_narration",
+      "expected_output": "Returns temporary narration for only the visible scene and identifies it as AI-generated voice.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not invoke LoreSight for unrelated information requests.",
+      "user_prompt": "What is the weather in Boston tomorrow?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because the request is outside interactive-fiction workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not use LoreSight as a general audiobook service.",
+      "user_prompt": "Narrate this entire novel as an audiobook.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because narration is limited to visible LoreSight story text.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not claim unsupported publishing or creator administration capabilities.",
+      "user_prompt": "Publish my draft story to a public game directory.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should explain that the player tools do not publish stories or administer a public directory.",
+      "expected_output_url": null
+    }
+  ]
+}

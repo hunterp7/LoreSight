@@ -1,0 +1,158 @@
+# Investigation compiler conformance world
+WORLD conformance.compiled-investigation v1.0.0
+  title: The Compiled Ledger
+  owner: Storyframe conformance suite
+  rights: original
+  engine: 0.1.0
+
+FRAME investigate
+  title: Archive inspection
+  text:
+    - The ledger cabinet is still sealed, but three details do not agree.
+    - A red thread, fractured wax, and yesterday's archive clock wait for inspection.
+  exact:
+    - The archive was locked overnight.
+  establish:
+    - Three physical details conflict with the official record.
+    - The player must choose which detail to inspect first.
+  suggest:
+    - Keep the room quiet and the evidence visually precise.
+  never:
+    - Identify who forged the ledger before the evidence reveals it.
+    - Resolve the archive patron's identity.
+  fallback:
+    - The cabinet remains sealed, but the thread, wax, and clock cannot all be telling the same story.
+    - Choose what to inspect first.
+
+FRAME resolution
+  title: Case resolution
+  text: The evidence is arranged in one clear sequence. Review it once more, then decide whether the case is ready to close.
+
+STATE
+  frame: investigate
+  location: archive
+  clue red_thread = false audiences player, model, creator, debug
+  clue broken_seal = false audiences player, model, creator, debug
+  clue false_date = false audiences player, model, creator, debug
+
+CANON archive
+  LOCK archive_is_locked: The archive was locked overnight.
+  SECRET culprit: The caretaker forged the missing ledger.
+    model directive: Do not identify the culprit until the engine reveals it.
+  UNSAID patron_identity: The archive patron's identity is intentionally unresolved.
+    audiences: creator, debug
+
+CAST caretaker
+  name: The Caretaker
+  role: Archive custodian
+
+INTENT inspect_red_thread
+  title: Inspect the red thread
+  description: Examine the red thread caught in the ledger cabinet.
+  frames: investigate
+  when: clue red_thread absent
+  effects:
+    - add clue red_thread
+    - reveal artifact red_thread_photo
+
+INTENT inspect_broken_seal
+  title: Inspect the broken seal
+  description: Examine the wax seal on the archive door.
+  frames: investigate
+  when: clue broken_seal absent
+  effects:
+    - add clue broken_seal
+
+INTENT inspect_false_date
+  title: Cross-check the date
+  description: Compare the ledger date with the archive clock.
+  frames: investigate
+  when: clue false_date absent
+  effects:
+    - add clue false_date
+
+INTENT acknowledge_solution
+  title: Close the investigation
+  description: Record the revealed solution and finish the case.
+  frames: resolution
+  effects:
+    - complete
+
+INTENT review_case_summary
+  title: Review the case summary
+  description: Reconstruct the evidence without naming intentionally unresolved details.
+  frames: verification_span
+  effects:
+    - go resolution
+
+RULE reveal_culprit_after_three_clues
+  once: true
+  when: clue_count >= 3
+  effects:
+    - reveal canon culprit
+    - go verification_span
+
+ARTIFACT red_thread_photo
+  kind: image
+  title: Cabinet Thread Photograph
+  summary: A close photograph shows red fibers caught beneath the ledger cabinet seal.
+  caption: Evidence photograph 3-B, contrast normalized.
+  alt: A monochrome cabinet seal crossed by one bright red thread, with the broken wax edge visible beneath it.
+  text:
+    - The fiber passes underneath the seal rather than resting on top of it.
+    - The wax fracture predates the dust around the cabinet latch.
+  presentation: inspect
+  audiences: player, model, creator, debug
+  clue: red_thread
+  asset: artifacts/red-thread-photo.svg
+  mime: image/svg+xml
+
+SPAN verification_span -> resolution
+  purpose: Let the player connect the three clues before closing the case.
+  turns: 1..2
+  required beats:
+    - Connect the thread, seal, and false date into one coherent sequence.
+    - Preserve the boundary around the unresolved patron identity.
+  curve: certainty 2 -> 5, urgency 3 -> 1
+  may invent:
+    - sensory details inside the archive
+    - concise evidence transitions
+  may not invent:
+    - new suspects
+    - new evidence
+    - the patron identity
+  persist inventions: turn
+  hide:
+    - canon patron_identity
+  offer: review_case_summary
+  exit when: required_beats complete
+  fallback:
+    - The three physical clues now describe one deliberate sequence of events.
+    - One identity remains outside the case and must stay unresolved.
+
+THREAD forged_ledger
+  plant at investigate
+  echo with red_thread, broken_seal, false_date
+  reveal at verification_span
+  pay_off at resolution
+  never resolve patron_identity
+
+CHOICE investigation_methods
+  frames: investigate
+  offer: inspect_red_thread, inspect_broken_seal, inspect_false_date
+
+TEST first_clue_preserves_culprit
+  seed: 42
+  play: inspect_red_thread
+  assert hidden: canon culprit
+  assert revealed: artifact red_thread_photo
+  assert frame: investigate
+  assert status: active
+
+TEST solution_path_completes
+  seed: 42
+  play: inspect_red_thread -> inspect_broken_seal -> inspect_false_date -> review_case_summary -> acknowledge_solution
+  assert revealed: canon culprit
+  assert revealed: artifact red_thread_photo
+  assert frame: resolution
+  assert status: complete
