@@ -40,7 +40,8 @@ function requireHttpsUrl(value: string, label: string, options?: { originOnly?: 
   if (options?.originOnly && (url.pathname !== "/" || url.search !== "" || url.hash !== "")) {
     throw new Error(`${label} must be the canonical HTTPS origin without a path, query, or fragment.`);
   }
-  return options?.originOnly ? url.origin : url.toString().replace(/\/$/, "");
+  // Issuers are exact identifiers; normalizing a trailing slash breaks JWT validation.
+  return options?.originOnly ? url.origin : value;
 }
 
 export function readOAuthDeploymentConfig(env: OAuthEnvironment): OAuthDeploymentConfig | undefined {
